@@ -1,12 +1,18 @@
-package com.itheima.insertsms;
+package com.itheima.savacontacts;
 
-import android.content.ContentValues;
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+   private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,12 +21,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void click1(View view) {
-        Uri uri=Uri.parse("content://sms/");
-        ContentValues values = new ContentValues();
-        values.put("address","110");
-        values.put("body","你的余额为0.00元");
-        values.put("date",System.currentTimeMillis());
+        //[1] 获取内容解析者
+        ContentResolver resolver=getContentResolver();
+        Utils.getContacts(resolver);
 
-        getContentResolver().insert(uri,values);
     }
 }
